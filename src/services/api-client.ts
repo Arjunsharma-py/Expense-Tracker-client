@@ -13,7 +13,8 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.clear();
-      window.location.href = "/auth/login";
+      window.location.href =
+        "https://expense-tracker-client-theta.vercel.app/auth/login";
     }
     return Promise.reject(error);
   }
