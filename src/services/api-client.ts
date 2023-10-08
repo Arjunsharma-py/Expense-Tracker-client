@@ -1,10 +1,11 @@
 import axios from "axios";
 const isProd = import.meta.env.PROD;
-const backendURL = import.meta.env.VITE_BACKEND_URL;
-const frontendURL = import.meta.env.VITE_FRONTEND_URL;
 
 const apiClient = axios.create({
-  baseURL: (isProd ? backendURL : "http://localhost:3000") + "/api",
+  baseURL:
+    (isProd
+      ? "https://expense-tracker-uha4.onrender.com"
+      : "http://localhost:3000") + "/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -16,9 +17,10 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.clear();
-      window.location.href = isProd
-        ? frontendURL
-        : "http://localhost:5173" + "/auth/login";
+      window.location.href =
+        (isProd
+          ? "https://expense-tracker-client-theta.vercel.app"
+          : "http://localhost:5173") + "/auth/login";
     }
     return Promise.reject(error);
   }
