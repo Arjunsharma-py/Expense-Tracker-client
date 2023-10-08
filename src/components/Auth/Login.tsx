@@ -68,10 +68,11 @@ export default function Login() {
         setLoading(false);
         toast({
           title: "Failed",
-          description:
-            err.response.status === 404
+          description: err.response
+            ? err.response.status === 404
               ? "User not found!"
-              : "Invalid email or password",
+              : "Invalid email or password"
+            : "Request not send",
           status: "error",
           duration: 5000,
           isClosable: true,
