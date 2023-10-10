@@ -21,10 +21,12 @@ interface Props {
 const DisplayPeople = ({ data, loading, name }: Props) => {
   return (
     <>
-      <Card>
+      <Card m={2}>
         <CardHeader>
           <HStack>
-            <Heading size="md">{name}</Heading>
+            <Heading size="md" mr={5}>
+              {name}
+            </Heading>
             {name === "Employees" && <AddEmployee />}
           </HStack>
         </CardHeader>

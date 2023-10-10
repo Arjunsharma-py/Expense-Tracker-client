@@ -8,6 +8,7 @@ import {
   Icon,
   IconProps,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Illustration = (props: IconProps) => {
   return (
@@ -831,6 +832,7 @@ const Illustration = (props: IconProps) => {
 };
 
 export default function Starter() {
+  const navigate = useNavigate();
   return (
     <Container maxW={"5xl"}>
       <Stack
@@ -855,10 +857,19 @@ export default function Starter() {
           smart “Daily Agenda” every morning.
         </Text>
         <Stack spacing={6} direction={"row"}>
-          <Button rounded={"full"} px={6} colorScheme={"purple"}>
+          <Button
+            rounded={"full"}
+            px={6}
+            colorScheme={"purple"}
+            onClick={() => navigate("/auth/signup")}
+          >
             Get started
           </Button>
-          <Button rounded={"full"} px={6}>
+          <Button
+            rounded={"full"}
+            px={6}
+            onClick={() => navigate("/auth/login")}
+          >
             Learn more
           </Button>
         </Stack>

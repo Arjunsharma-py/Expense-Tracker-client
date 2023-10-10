@@ -24,6 +24,7 @@ import AllEmployee from "../People/AllEmployee";
 import EmployeeProfile from "../Profile/EmployeeProfile";
 import ManagerProfile from "../Profile/ManagerProfile";
 import OrganisationProfile from "../Profile/OrganisationProfile";
+import Requests from "../Navbar/Requests";
 
 const Layout = () => {
   const userContext = useContext(UserContext);
@@ -181,6 +182,16 @@ const Layout = () => {
                 element={
                   userContext.user ? (
                     <EditData />
+                  ) : (
+                    <Navigate to="/auth/login" />
+                  )
+                }
+              />
+              <Route
+                path="/requests"
+                element={
+                  userContext.user ? (
+                    <Requests smallDevice={true} />
                   ) : (
                     <Navigate to="/auth/login" />
                   )

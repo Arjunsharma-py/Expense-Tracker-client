@@ -98,10 +98,9 @@ export default function Signup() {
         setLoading(false);
         toast({
           title: "Failed",
-          description:
-            err.response.status === 404
-              ? "User not found!"
-              : "Invalid email or password",
+          description: err.response
+            ? err.response.data.error
+            : "Request not send",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -242,7 +241,7 @@ export default function Signup() {
               <Stack pt={6}>
                 <Text align={"center"}>
                   Already a user?
-                  <Link to="/login">
+                  <Link to="/auth/login">
                     <Button variant="link" pl={1} colorScheme="purple">
                       Login
                     </Button>

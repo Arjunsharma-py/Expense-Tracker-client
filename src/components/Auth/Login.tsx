@@ -12,6 +12,7 @@ import {
   Text,
   useToast,
   FormHelperText,
+  Divider,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
@@ -46,6 +47,21 @@ export default function Login() {
     reset,
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  const sendEmail = (email: string) => {
+    apiClient
+      .post("/mng/sendOtp", { email: email })
+      .then()
+      .catch(() => {
+        toast({
+          title: "Error",
+          description: "Error sending messages resend otp!",
+          status: "error",
+          isClosable: true,
+          duration: 3000,
+        });
+      });
+  };
+
   const submitData = (data: FieldValues) => {
     setLoading(true);
     apiClient
@@ -66,17 +82,29 @@ export default function Login() {
       })
       .catch((err) => {
         setLoading(false);
-        toast({
-          title: "Failed",
-          description: err.response
-            ? err.response.status === 404
-              ? "User not found!"
-              : "Invalid email or password"
-            : "Request not send",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+        if (err.response && err.response.status === 403) {
+          toast({
+            title: "Verification",
+            description: err.response.data.error,
+            status: "warning",
+            duration: 5000,
+            isClosable: true,
+          });
+          sendEmail(data.email);
+          setLoading(false);
+          localStorage.setItem("tempEmail", data.email);
+          navigate("/auth/verify");
+        } else {
+          toast({
+            title: "Failed",
+            description: err.response
+              ? err.response.data.error
+              : "Request not send",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+          });
+        }
       });
   };
 
@@ -143,6 +171,15 @@ export default function Login() {
                 Sign in
               </Button>
             </Stack>
+            <Divider />
+            <Text align={"center"}>
+              doesn't have an account?
+              <Link to="/auth/signup">
+                <Button variant="link" pl={1} colorScheme="purple">
+                  Join now
+                </Button>
+              </Link>
+            </Text>
           </Stack>
         </Box>
       </Stack>

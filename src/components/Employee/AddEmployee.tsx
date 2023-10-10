@@ -20,7 +20,6 @@ import { z } from "zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import apiClient from "../../services/api-client";
-import { MdAddCircleOutline } from "react-icons/md";
 
 const schema = z.object({
   name: z.string().min(3, "name should be atleast 3 characters"),
@@ -71,8 +70,8 @@ const AddEmployee = () => {
     <>
       <Popover>
         <PopoverTrigger>
-          <Button variant="unstyled">
-            <MdAddCircleOutline />
+          <Button variant="solid" colorScheme="whatsapp">
+            Add
           </Button>
         </PopoverTrigger>
         <Portal>

@@ -1,7 +1,10 @@
 import {
+  Box,
   Button,
   ButtonGroup,
+  Center,
   HStack,
+  Heading,
   List,
   ListItem,
   Popover,
@@ -25,7 +28,11 @@ interface obj {
   name: string;
 }
 
-const Requests = () => {
+interface Props {
+  smallDevice: boolean;
+}
+
+const Requests = ({ smallDevice }: Props) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<obj[]>([] as obj[]);
   const toast = useToast();
@@ -75,41 +82,71 @@ const Requests = () => {
   };
 
   return (
-    <Popover>
-      <PopoverTrigger>
-        <Button variant="unstyled">
-          <PiUserCirclePlus size="22px" />
-        </Button>
-      </PopoverTrigger>
-      <Portal>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverHeader>
-            {data.length ? "Requests" : "No request"}
-          </PopoverHeader>
-          <PopoverCloseButton />
-          <PopoverBody>
-            {loading ? (
-              <Spinner />
-            ) : (
-              <List spacing={1}>
-                {data.map((manager) => (
-                  <ListItem>
-                    <HStack justifyContent="space-between">
-                      <Text>{manager.name}</Text>
-                      <ButtonGroup>
-                        <Button onClick={() => submitData(manager)}>yes</Button>
-                        {/* <Button onClick={() => submitData(manager)}>no</Button> */}
-                      </ButtonGroup>
-                    </HStack>
-                  </ListItem>
-                ))}
-              </List>
-            )}
-          </PopoverBody>
-        </PopoverContent>
-      </Portal>
-    </Popover>
+    <>
+      {smallDevice ? (
+        <Box p={3}>
+          <Heading>Joining Requests</Heading>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <List spacing={1}>
+              {data.map((manager) => (
+                <ListItem borderWidth={1} p={2}>
+                  <HStack justifyContent="space-between">
+                    <Text>{manager.name}</Text>
+                    <ButtonGroup>
+                      <Button onClick={() => submitData(manager)}>yes</Button>
+                      {/* <Button onClick={() => submitData(manager)}>no</Button> */}
+                    </ButtonGroup>
+                  </HStack>
+                </ListItem>
+              ))}
+            </List>
+          )}
+          {!data.length && (
+            <Center>NO request! Refresh the page if it get one. 😊</Center>
+          )}
+        </Box>
+      ) : (
+        <Popover>
+          <PopoverTrigger>
+            <Button variant="unstyled">
+              <PiUserCirclePlus size="22px" />
+            </Button>
+          </PopoverTrigger>
+          <Portal>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverHeader>
+                {data.length ? "Requests" : "No request"}
+              </PopoverHeader>
+              <PopoverCloseButton />
+              <PopoverBody>
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  <List spacing={1}>
+                    {data.map((manager) => (
+                      <ListItem>
+                        <HStack justifyContent="space-between">
+                          <Text>{manager.name}</Text>
+                          <ButtonGroup>
+                            <Button onClick={() => submitData(manager)}>
+                              yes
+                            </Button>
+                            {/* <Button onClick={() => submitData(manager)}>no</Button> */}
+                          </ButtonGroup>
+                        </HStack>
+                      </ListItem>
+                    ))}
+                  </List>
+                )}
+              </PopoverBody>
+            </PopoverContent>
+          </Portal>
+        </Popover>
+      )}
+    </>
   );
 };
 

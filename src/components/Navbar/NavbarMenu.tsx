@@ -26,7 +26,7 @@ const NavbarMenu = () => {
     <>
       <ButtonGroup>
         <Show above="md">
-          {userContext.user.isAdmin && <Requests />}
+          {userContext.user.isAdmin && <Requests smallDevice={false} />}
           <ColorModeSwitch isSwitch={false} />
         </Show>
 
@@ -41,7 +41,9 @@ const NavbarMenu = () => {
           </MenuButton>
           <MenuList>
             <Divider />
-            <MenuItem color="purple.300">{userContext.user.name}</MenuItem>
+            <Link to={`/manager/${userContext.user._id}`}>
+              <MenuItem color="purple.300">{userContext.user.name}</MenuItem>
+            </Link>
             <Divider />
             <Link to={`/manager/${userContext.user._id}`}>
               <MenuItem>Profile</MenuItem>
@@ -53,6 +55,11 @@ const NavbarMenu = () => {
               <MenuItem>Employees</MenuItem>
             </Link>
             <Show below="md">
+              {userContext.user.isAdmin && (
+                <Link to="/requests">
+                  <MenuItem>Joining requests</MenuItem>
+                </Link>
+              )}
               <MenuItem>
                 <ColorModeSwitch isSwitch={true} />
               </MenuItem>

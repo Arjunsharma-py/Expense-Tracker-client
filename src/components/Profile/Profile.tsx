@@ -53,8 +53,8 @@ export default function Profile({ data }: Props) {
           color={useColorModeValue("gray.700", "gray.400")}
           px={3}
         >
-          {/* Actress, musician, songwriter and artist. PM for work inquires or{" "}
-          <Text color={"blue.400"}>#{data.type}</Text> me in your posts */}
+          {/* Actress, musician, songwriter and artist. PM for work inquires or{" "} */}
+          <Text color={"blue.400"}>email</Text> {data.email}
         </Text>
 
         <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
