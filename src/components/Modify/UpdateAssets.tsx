@@ -1,5 +1,13 @@
 import {
   Button,
+  Card,
+  CardBody,
+  Divider,
+  HStack,
+  Heading,
+  Show,
+  Spacer,
+  Stack,
   Table,
   TableContainer,
   Tbody,
@@ -29,6 +37,7 @@ const UpdateAssets = ({ operation, assetData, setAssetData }: Props) => {
   const [editableData, setEditableData] = useState<Asset>({} as Asset);
   const [showForm, setShowForm] = useState(false);
 
+  let tempDate = new Date(0);
   let sno = 1;
 
   const handleDelete = (id: string) => {
@@ -61,6 +70,14 @@ const UpdateAssets = ({ operation, assetData, setAssetData }: Props) => {
     onOpen();
   };
 
+  const checkDate = (date: Date) => {
+    if (new Date(tempDate).getDate() !== new Date(date).getDate()) {
+      tempDate = date;
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       {showForm && (
@@ -76,48 +93,95 @@ const UpdateAssets = ({ operation, assetData, setAssetData }: Props) => {
           }}
         />
       )}
-      <TableContainer>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>S.no.</Th>
-              <Th>Date</Th>
-              <Th>Credit To</Th>
-              <Th>source</Th>
-              <Th>Amount</Th>
-              <Th>Operation</Th>
-            </Tr>
-          </Thead>
-
-          <Tbody>
-            {assetData.map((asset) => (
-              <Tr key={asset._id}>
-                <Td>{sno++}</Td>
-                <Td>{new Date(asset.date).toDateString()}</Td>
-                <Td>
-                  <Text>{asset.manager.name}</Text>
-                </Td>
-                <Td>{asset.source ? asset.source : "Unknown"}</Td>
-                <Td>₹{asset.amount}</Td>
-                {operation === "del" ? (
-                  <Td>
-                    <Button
-                      onClick={() => handleDelete(asset._id)}
-                      colorScheme="red"
-                    >
-                      <AiOutlineDelete />
-                    </Button>
-                  </Td>
-                ) : (
-                  <Td>
-                    <Button onClick={() => handleShowForm(asset)}>Edit</Button>
-                  </Td>
-                )}
+      <Show below="md">
+        <Stack spacing={4}>
+          <Heading>{operation === "del" ? "Delete" : "Edit"} Assets</Heading>
+          <Divider />
+          {assetData.map((asset) => (
+            <div key={asset._id}>
+              {checkDate(asset.date) && (
+                <Text>{new Date(asset.date).toDateString()}</Text>
+              )}
+              <Card key={asset._id} variant="filled" size="sm" p={3}>
+                <CardBody>
+                  <HStack>
+                    <Stack>
+                      <Text fontSize={{ base: 11, md: 12 }}>
+                        Credit to: {asset.manager.name}
+                      </Text>
+                      <Text fontSize={{ base: 11, md: 12 }}>
+                        Amount: {asset.amount}
+                      </Text>
+                      <Text fontSize={{ base: 11, md: 12 }}>
+                        Source: {asset.source || "unknown"}
+                      </Text>
+                    </Stack>
+                    <Spacer />
+                    {operation === "del" ? (
+                      <Button
+                        onClick={() => handleDelete(asset._id)}
+                        colorScheme="red"
+                      >
+                        <AiOutlineDelete />
+                      </Button>
+                    ) : (
+                      <Button onClick={() => handleShowForm(asset)}>
+                        Edit
+                      </Button>
+                    )}
+                  </HStack>
+                </CardBody>
+              </Card>
+            </div>
+          ))}
+        </Stack>
+      </Show>
+      <Show above="md">
+        <TableContainer>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>S.no.</Th>
+                <Th>Date</Th>
+                <Th>Credit To</Th>
+                <Th>source</Th>
+                <Th>Amount</Th>
+                <Th>Operation</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+            </Thead>
+
+            <Tbody>
+              {assetData.map((asset) => (
+                <Tr key={asset._id}>
+                  <Td>{sno++}</Td>
+                  <Td>{new Date(asset.date).toDateString()}</Td>
+                  <Td>
+                    <Text>{asset.manager.name}</Text>
+                  </Td>
+                  <Td>{asset.source ? asset.source : "Unknown"}</Td>
+                  <Td>₹{asset.amount}</Td>
+                  {operation === "del" ? (
+                    <Td>
+                      <Button
+                        onClick={() => handleDelete(asset._id)}
+                        colorScheme="red"
+                      >
+                        <AiOutlineDelete />
+                      </Button>
+                    </Td>
+                  ) : (
+                    <Td>
+                      <Button onClick={() => handleShowForm(asset)}>
+                        Edit
+                      </Button>
+                    </Td>
+                  )}
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Show>
     </>
   );
 };

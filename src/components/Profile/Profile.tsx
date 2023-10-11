@@ -15,19 +15,19 @@ interface Props {
 
 export default function Profile({ data }: Props) {
   return (
-    <Center py={6}>
+    <Center py={16}>
       <Box
         maxW={"320px"}
         w={"full"}
         bg={useColorModeValue("white", "gray.900")}
-        boxShadow={"2xl"}
+        boxShadow={"xl"}
         rounded={"lg"}
         p={6}
         textAlign={"center"}
       >
         <Avatar
           size={"xl"}
-          src={"https://bit.ly/broken-link"}
+          src={""}
           mb={4}
           pos={"relative"}
           _after={{

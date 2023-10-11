@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { AssetQuery } from "../../hooks/useAsset";
 import TableAssets from "./TableAssets";
+import { Show } from "@chakra-ui/react";
+import CardsAssets from "./CardsAssets";
 
 const Assets = () => {
   const [assetQuery, setAssetQuery] = useState<AssetQuery>({
@@ -8,10 +10,20 @@ const Assets = () => {
   } as AssetQuery);
 
   return (
-    <TableAssets
-      assetQuery={assetQuery}
-      onSetassetQuery={(assetQuery) => setAssetQuery(assetQuery)}
-    />
+    <>
+      <Show below="md">
+        <CardsAssets
+          assetQuery={assetQuery}
+          onSetassetQuery={(assetQuery) => setAssetQuery(assetQuery)}
+        />
+      </Show>
+      <Show above="md">
+        <TableAssets
+          assetQuery={assetQuery}
+          onSetassetQuery={(assetQuery) => setAssetQuery(assetQuery)}
+        />
+      </Show>
+    </>
   );
 };
 

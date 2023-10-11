@@ -31,7 +31,7 @@ const NavigationMenu = () => {
             <MenuList>
               <MenuItem onClick={() => navigate("/dash")}>Dashboard</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={() => navigate("/add")}>Create</MenuItem>
+              <MenuItem onClick={() => navigate("/add")}>Add</MenuItem>
               <MenuItem onClick={() => navigate("/edit")}>Edit</MenuItem>
               <MenuItem onClick={() => navigate("/del")}>Delete</MenuItem>
               <MenuDivider />

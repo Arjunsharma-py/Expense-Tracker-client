@@ -1,6 +1,8 @@
 import { ExpenseQuery } from "../../hooks/useExpense";
 import { useState } from "react";
 import TableExpenses from "./TableExpenses";
+import CardsExpenses from "./CardsExpenses";
+import { Show } from "@chakra-ui/react";
 
 const Expenses = () => {
   const [expenseQuery, setExpenseQuery] = useState<ExpenseQuery>({
@@ -10,10 +12,18 @@ const Expenses = () => {
 
   return (
     <>
-      <TableExpenses
-        expenseQuery={expenseQuery}
-        onSetExpenseQuery={(expQuery) => setExpenseQuery(expQuery)}
-      />
+      <Show below="md">
+        <CardsExpenses
+          expenseQuery={expenseQuery}
+          onSetExpenseQuery={(expQuery) => setExpenseQuery(expQuery)}
+        />
+      </Show>
+      <Show above="md">
+        <TableExpenses
+          expenseQuery={expenseQuery}
+          onSetExpenseQuery={(expQuery) => setExpenseQuery(expQuery)}
+        />
+      </Show>
     </>
   );
 };

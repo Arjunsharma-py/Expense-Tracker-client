@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import apiClient from "../../services/api-client";
-import { PiUserCirclePlus } from "react-icons/pi";
+import { BsPersonFillAdd } from "react-icons/bs";
 
 interface obj {
   _id: string;
@@ -111,7 +111,7 @@ const Requests = ({ smallDevice }: Props) => {
         <Popover>
           <PopoverTrigger>
             <Button variant="unstyled">
-              <PiUserCirclePlus size="22px" />
+              <BsPersonFillAdd size="18px" />
             </Button>
           </PopoverTrigger>
           <Portal>
